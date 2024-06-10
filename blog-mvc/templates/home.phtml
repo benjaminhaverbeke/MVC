@@ -1,0 +1,14 @@
+<main>
+    
+    <h1>Page d'accueil</h1>
+    
+    <?php foreach($latest as $key => $value) {?>
+    <article>
+        <h2><?= $latest[$key]->getTitle() ?></h2>
+        <p>Extrait : <?= $latest[$key]->getExcerpt()    ?></p>
+    
+    </article>
+    <?php }?>
+
+    
+</main>
