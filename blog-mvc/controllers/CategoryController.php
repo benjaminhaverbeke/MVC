@@ -15,13 +15,23 @@ class CategoryController {
         {
             $route = "categories";
             
+            $category = new CategoryManager();
+            
+            $categoryDisplay = $category->findAll();
+            
             require 'templates/layout.phtml';
         }
         
         
     public function category() : void
         {
-            $route = "category=id_category";
+            $route = "category";
+            $category = $_GET["category"];
+            $oneCategory = new CategoryManager();
+            
+            
+            $categoryDisplay = $oneCategory->findOne($category);
+            
             
             
             require 'templates/layout.phtml';

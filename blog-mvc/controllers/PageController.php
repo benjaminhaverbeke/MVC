@@ -47,6 +47,11 @@ class PageController {
         {
             $route = "espace-perso";
             
+            
+            
+            $user = new UserManager();
+            $userList = $user->findAll();
+            
             require 'templates/layout.phtml';
             
         }
@@ -55,11 +60,44 @@ class PageController {
         {
             $route = "home";
             
-            $posts = new PostManager();
+            $categories = new CategoryManager();
+            $allCategories = $categories->findAll();
+            $tableCategories = [];
             
-            $latest = $posts->findLatest();
             
-            var_dump($latest);
+            foreach($allCategories as $category){
+                
+                $categoryId = $category->getId();
+                $categoryTitle = $category->getTitle();
+               
+                
+                $post = new PostManager();
+                
+                $categoryPosts = $post->findByCategory($categoryId);
+                
+                   $posts = [
+                       "categoryTitle" => $categoryTitle,
+                      
+                [
+                    'title' => $categoryPosts[0]->getTitle(),
+                'excerpt' => $categoryPosts[0]->getExcerpt(),
+                    ],
+                 
+               [
+                    'title' => $categoryPosts[1]->getTitle(),
+                'excerpt' => $categoryPosts[1]->getExcerpt(),
+                    ]
+                    ];
+                    
+                    
+                
+               array_push($tableCategories, $posts);
+               
+               
+               
+               
+            }
+           
             
             
             require 'templates/layout.phtml';

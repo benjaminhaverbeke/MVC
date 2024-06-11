@@ -52,8 +52,16 @@
 			    require 'templates/existepas.phtml';
 			    
 			}
-			
-			
+			elseif($route === 'categories')
+			{
+				
+				require 'templates/categories.phtml';
+			}
+			elseif($route === 'category')
+			{
+				
+				require 'templates/category.phtml';
+			}
 			
 		?>
 	</body>

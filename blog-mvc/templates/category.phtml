@@ -1,0 +1,13 @@
+<main>
+    
+    <article>
+        <?php if(!empty($categoryDisplay)) {  ?>
+        <h2><?= $categoryDisplay->getTitle() ?></h2>
+        <p><?= $categoryDisplay->getDescription() ?></p>
+        <?php } else {?>
+        <p><?= "cette categorie n'existe pas" ?></p>
+        <?php }?>
+    </article>
+    
+    
+</main>

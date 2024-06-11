@@ -4,6 +4,76 @@
   <?= $_SESSION["user"]["username"] ?>
   
   </p> 
-    
+    <table>
+    <thead>
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Nom d'utilisateur
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Mot de passe
+        </th>
+        <th>
+            Rôle
+        </th>
+        <th>
+            Modifier
+        </th>
+        <th>
+            Supprimer
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        <?php foreach($userList as $key => $value){
+        
+        ?>
+        <tr>
+            <td><?= $value->getId() ?></td>
+            <td><?= $value->getUsername() ?></td>
+            <td><?= $value->getEmail() ?></td>
+            <td><?= $value->getPassword() ?></td>
+            <td><?= $value->getRole() ?></td>
+            <td>
+                <button>Modifier<a href="../logic/modify-user.php?id=<?= $value->getId()?>" class="btn btn-danger"><scan class="bi-trash-fill"></scan></a></button>
+            </td>
+            <td>
+                <button>Supprimer</button>
+            </td>
+        </tr>
+        <?php } ?>
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Nom d'utilisateur
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Mot de passe
+        </th>
+        <th>
+            Rôle
+        </th>
+        <th>
+            Modifier
+        </th>
+        <th>
+            Supprimer
+        </th>
+    </tr>
+    </tfoot>
+</table>
     
 </main>

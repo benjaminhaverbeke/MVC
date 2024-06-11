@@ -2,11 +2,19 @@
     
     <h1>Page d'accueil</h1>
     
-    <?php foreach($latest as $key => $value) {?>
+   
+   <?php 
+   foreach($tableCategories as $category) {?>
     <article>
-        <h2><?= $latest[$key]->getTitle() ?></h2>
-        <p>Extrait : <?= $latest[$key]->getExcerpt()    ?></p>
-    
+        <h2><?= $category["categoryTitle"]  ?></h2>
+        <section>
+            <h3><?= $category[0]['title']?></h3>
+            <p><?= $category[0]['excerpt']?></p>
+        </section>
+        <section>
+            <h3><?= $category[1]['title']?></h3>
+            <p><?= $category[0]['excerpt']?></p>
+        </section>
     </article>
     <?php }?>
 

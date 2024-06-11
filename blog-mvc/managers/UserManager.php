@@ -74,4 +74,47 @@ class UserManager extends AbstractManager
         $user->setId($this->db->lastInsertId());
 
     }
+    
+    public function findAll() : array {
+        
+        $query = $this->db->prepare('SELECT * FROM users');
+        $query->execute();
+        $usersList = $query->fetchAll(PDO::FETCH_ASSOC);
+        $usersTable = [];
+        
+        foreach($usersList as $user){
+            
+            $newUser = new User($user["username"], $user["email"], $user["password"], $user["role"], $user["created_at"]);
+            $newUser->setId($user['id']);
+            array_push($usersTable, $newUser);
+            
+            
+        }
+        
+        
+        return $usersTable;
+        
+    }
+    
+    public function delete(User $user){
+        
+        $parameters = [
+            'id' => $_GET['id']
+                    ];
+
+
+
+        $query = $db->prepare("DELETE FROM users WHERE id=:id");
+ 
+
+        $query->execute($parameters);
+        
+        
+    }
+    
+    
+    
 }
+
+
+?>

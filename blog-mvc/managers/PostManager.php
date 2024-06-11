@@ -14,39 +14,7 @@ class PostManager extends AbstractManager {
         
     }
     
-    public function findLastPostCat() : array {
-        
-        $userManager = new UserManager();
-        $categoryManager = new CategoryManager();
-        
-        $query = $this->db->prepare('SELECT * FROM posts ORDER BY created_at LIMIT 4');
-        
-        $query->execute();
-        
-        $postsList = $query->fetchAll(PDO::FETCH_ASSOC);
-        
-        $postsTable = [];
-        
-        foreach($postsList as $post){
-            
-            
-            $categories = $categoryManager->findByPost($post["id"]);
-            $user = $userManager->findOne($post["author"]);
-            
-            $newPost = new Post($post["title"], $post["excerpt"], $post["content"], $user, DateTime::createFromFormat('Y-m-d H:i:s', $post["created_at"]));
-            $newPost->setId($post['id']);
-            $newPost->setCategories($categories);
-            $postsTable[] = $newPost;
-            
-            
-        }
-        
-        
-        return $postsTable;
-        
-        
-        
-    }
+    
     
     
     public function findLatest() : array {
@@ -56,7 +24,7 @@ class PostManager extends AbstractManager {
         $categoryManager = new CategoryManager();
         
         
-        $query = $this->db->prepare('SELECT * FROM posts ORDER BY created_at LIMIT 4');
+        $query = $this->db->prepare('SELECT * FROM posts ORDER BY created_at LIMIT 8');
         
         $query->execute();
         

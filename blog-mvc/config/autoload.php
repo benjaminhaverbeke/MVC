@@ -18,6 +18,8 @@ require 'controllers/PageController.php';
 
 require 'controllers/CategoryController.php';
 
+require 'controllers/AuthController.php';
+
 require 'controllers/PostController.php';
 
 require 'config/Router.php';

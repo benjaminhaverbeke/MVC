@@ -1,0 +1,16 @@
+<main>
+    
+
+    <?php
+    foreach($categoryDisplay as $value)
+    
+                {    
+    ?>
+    <article>
+    <h2><?= $value->getTitle()    ?>
+    </h2>
+    <p><?= $value->getDescription() ?></p>
+    </article>
+    <?php }?>
+
+</main>
