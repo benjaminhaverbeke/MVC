@@ -14,6 +14,8 @@ require 'models/Category.php';
 
 require 'models/Post.php';
 
+require 'controllers/UserController.php';
+
 require 'controllers/PageController.php';
 
 require 'controllers/CategoryController.php';

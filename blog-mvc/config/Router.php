@@ -17,6 +17,8 @@ class Router {
                 
                 $base = new PageController();
                 
+                $user = new UserController();
+                
                 if(empty($_GET["route"]) || $_GET["route"] === "home")
                 {
                     
@@ -40,6 +42,58 @@ class Router {
                 elseif($_GET["route"] === "post" && isset($_GET["post"]))
                 {
                     $postController->post();
+                    
+                }
+                elseif($_GET["route"] === "deleteUser" && isset($_GET["user"]))
+                {
+                    $user->deleteUser();
+                    
+                    $admin = new PageController();
+            
+                    $admin->espacePerso();
+                    
+                }
+                elseif($_GET["route"] === "checkUser" && isset($_GET["user"]))
+                {
+                    $user->checkUser();
+                    
+                }
+                elseif($_GET["route"] === "modifyUser" &&isset($_GET["user"]))
+                {
+                    $user->modifyUser();
+                    
+                    
+                    
+                    
+                }
+                elseif($_GET["route"] ==="create-user")
+                {
+                    
+                    $user->createUser();
+                    
+                    
+                }
+                elseif($_GET["route"] ==="deletepost")
+                {
+                    $postController->deletePost();
+                    
+                }
+                elseif($_GET["route"] === "checkpost" && isset($_GET["post"]))
+                {
+                    $postController->checkPost();
+                    
+                }
+                elseif($_GET["route"] === "modifypost" && isset($_GET["post"]))
+                {
+                    
+                    $postController->modifyPost();
+                    
+                }
+                elseif($_GET["route"] === "create-post")
+                {
+                    
+                    $postController->createPost();
+                    
                     
                 }
                 elseif($_GET['route'] === 'connexion')

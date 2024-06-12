@@ -1,0 +1,9 @@
+<form method="post" action="index.php?route=modifyUser&user=<?=$_GET["user"]?>">
+      <?php if(!empty($goodUser)) {  ?>
+    <input type="text" name="username" value="<?=$goodUser->getUsername() ?>" placeholder="username"/>
+    <input type="text" name="password" value="<?=$goodUser->getPassword() ?>" placeholder="password"/>
+    <input type="text" name="email" value="<?=$goodUser->getEmail() ?>" placeholder="email"/>
+    <input type="text" name="role" value="<?=$goodUser->getRole() ?>" placeholder="role"/>
+    <input type="submit" value="Modifier l'utilisateur" />
+    <?php } ?>
+</form>

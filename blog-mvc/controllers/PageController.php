@@ -52,6 +52,13 @@ class PageController {
             $user = new UserManager();
             $userList = $user->findAll();
             
+            $post = new PostManager();
+            $postList = $post->findAll();
+            
+            $category = new CategoryManager();
+            
+            $categoryList = $category->findAll();
+            
             require 'templates/layout.phtml';
             
         }

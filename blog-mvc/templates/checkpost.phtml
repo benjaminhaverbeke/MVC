@@ -1,0 +1,27 @@
+<form method="post" action="index.php?route=modifypost&post=<?=$_GET["post"]?>">
+      <?php if(!empty($goodPost)) {  ?>
+     
+    <input type="text" name="title" value="<?=$goodPost->getTitle() ?>" placeholder="title"/>
+    <input type="text" name="excerpt" value="<?=$goodPost->getExcerpt() ?>" placeholder="excerpt"/>
+    <input type="text" name="auteur" value="<?=$goodPost->getAuthor()->getId(); ?>" placeholder="auteur"/>
+    
+    <?php 
+    
+    $cate = $goodPost->getCategories();
+    if(empty($cate)=== false){
+    foreach($cate as $value){
+        
+     
+            foreach($value as $key => $val) {
+                ?>
+           <input name="categorie ${$key}" type="text" value="<?=  $val  ?>"> 
+            
+           <?php }}}else{?>
+    <input name="categorie" type="text" />
+    <?php }?>
+    
+    
+    <textarea name=content  cols="50" ><?= $goodPost->getContent() ?></textarea>
+    <input type="submit" value="Modifier le post" />
+    <?php } ?>
+</form>

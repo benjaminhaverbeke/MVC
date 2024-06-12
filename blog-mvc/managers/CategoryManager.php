@@ -62,6 +62,26 @@ class CategoryManager extends AbstractManager
 
         return $result;
     }
+    
+    public function findOneTitle(string $title) : ? Category
+    {
+        $query = $this->db->prepare('SELECT * FROM categories WHERE title=:title');
+        $parameters = [
+            "title" => $title
+        ];
+        $query->execute($parameters);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if($result)
+        {
+            $category = new Category($result["title"], $result["description"]);
+            $category->setId($result["id"]);
+
+            return $category;
+        }
+
+        return null;
+    }
 }
 
 ?>

@@ -51,6 +51,40 @@ class PostManager extends AbstractManager {
         
     }
     
+    public function findAll() : array {
+        
+        
+        $userManager = new UserManager();
+        $categoryManager = new CategoryManager();
+        
+        
+        $query = $this->db->prepare('SELECT * FROM posts');
+        
+        $query->execute();
+        
+        $postsList = $query->fetchAll(PDO::FETCH_ASSOC);
+        
+        $postsTable = [];
+        
+        foreach($postsList as $post){
+            
+            
+            $categories = $categoryManager->findByPost($post["id"]);
+            $user = $userManager->findOne($post["author"]);
+            
+            $newPost = new Post($post["title"], $post["excerpt"], $post["content"], $user, DateTime::createFromFormat('Y-m-d H:i:s', $post["created_at"]));
+            $newPost->setId($post['id']);
+            $newPost->setCategories($categories);
+            $postsTable[] = $newPost;
+            
+            
+        }
+        
+        
+        return $postsTable;
+        
+    }
+    
     public function findOne(int $id) : ? Post
     {
         $um = new UserManager();
@@ -105,6 +139,122 @@ class PostManager extends AbstractManager {
 
         return $posts;
     }
+    
+    
+    public function deletePost(int $post) : void
+        {
+        
+        $parameters = [
+            'id' => $post
+                    ];
+                    
+        $query = $this->db->prepare("DELETE FROM posts WHERE id=:id");
+ 
+        $query->execute($parameters);
+        
+        $query = $this->db->prepare("DELETE FROM posts_categories WHERE post_id=:id");
+        
+        $query->execute($parameters);
+        
+        
+        }
+        
+        public function modifyPost(Post $post)
+    {
+        
+        $parameters = [
+            'id' => $post->getId(),
+            'title' => $post->getTitle(),
+            'excerpt' => $post->getExcerpt(),
+            'content' => $post->getContent(),
+            'author'=> $post->getAuthor()->getId(),
+            
+            
+            ];
+            
+            
+        
+        $query = $this->db->prepare("UPDATE posts
+        SET title=:title, excerpt=:excerpt, content=:content, author=:author
+        WHERE id =:id");
+        
+        $query->execute($parameters);
+        
+        
+        foreach($post->getCategories() as $array){
+            
+            foreach($array as $category){
+            $cm = new CategoryManager();
+            $result= $cm->findOneTitle($category->getTitle());
+            
+            
+            $parameters = [
+                'category_id' => $result->getId(),
+                'post_id' => $post->getId()
+                
+                ];
+            
+            $query = $this->db->prepare("UPDATE posts_categories
+                SET category_id=:category_id
+                WHERE post_id =:id");
+            
+            $query->execute($parameters);
+            
+            }
+            
+            
+            
+        }
+            
+            
+            
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    public function createPost(Post $post) : void
+        {
+            
+
+        $query = $this->db->prepare('INSERT INTO posts (title, excerpt, content, author) VALUES (:title, :excerpt, :content, :author)');
+        
+        $parameters = [
+            "title" => $post->getTitle(),
+            "excerpt" => $post->getExcerpt(),
+            "content" => $post->getContent(),
+            "author" => $post->getAuthor()->getId(),
+            
+        ];
+            
+            $query->execute($parameters);
+            
+           foreach($post->getCategories() as $array){
+            
+            foreach($array as $category){
+            $cm = new CategoryManager();
+            $result= $cm->findOneTitle($category->getTitle());
+            
+            
+            $parameters = [
+                'category_id' => $result->getId(),
+                'post_id' => $post->getId()
+                
+                ];
+            
+            $query = $this->db->prepare('INSERT INTO posts_categories (category_id, post_id) VALUES (:category_id, :post_id)');
+            
+            $query->execute($parameters);
+            
+            }
+        }
+    
+    
+        }
     
 }
 

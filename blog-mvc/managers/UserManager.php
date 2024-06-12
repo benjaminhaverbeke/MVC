@@ -56,7 +56,7 @@ class UserManager extends AbstractManager
         return null;
     }
 
-    public function create(User $user) : void
+    public function createUser(User $user) : void
     {
         $currentDateTime = date('Y-m-d H:i:s');
 
@@ -96,15 +96,18 @@ class UserManager extends AbstractManager
         
     }
     
-    public function delete(User $user){
+    public function deleteUser(int $user){
+        
+        
+        
         
         $parameters = [
-            'id' => $_GET['id']
+            'id' => $user
                     ];
 
 
 
-        $query = $db->prepare("DELETE FROM users WHERE id=:id");
+        $query = $this->db->prepare("DELETE FROM users WHERE id=:id");
  
 
         $query->execute($parameters);
@@ -112,6 +115,28 @@ class UserManager extends AbstractManager
         
     }
     
+    public function ModifyUser(User $user)
+    {
+        
+        $parameters = [
+            'id' => $user->getId(),
+            'username' => $user->getUsername(),
+            'password' => $user->getPassword(),
+            'email' => $user->getEmail(),
+            'role' => $user->getRole()
+            
+            
+            ];
+            
+            var_dump($parameters);
+        
+        $query = $this->db->prepare("UPDATE users
+        SET username=:username, password=:password, email=:email, role=:role
+        WHERE id =:id");
+        
+        $query->execute($parameters);
+        
+    }
     
     
 }
